@@ -23,21 +23,6 @@ class Interpreter(object):
             self.pos += 1
             current_char = text[self.pos]
 
-
-        if current_char.isdigit():
-            number_builder = ''
-            while current_char.isdigit():
-                number_builder += current_char
-                self.pos += 1
-            return Token(INTEGER, int(number_builder))
-
-
-
-
-            token = Token(INTEGER, int(current_char))
-            self.pos += 1
-            return token
-
         if current_char == '+':
             token = Token(PLUS, current_char)
             self.pos += 1
@@ -47,6 +32,16 @@ class Interpreter(object):
             token = Token(MINUS, current_char)
             self.pos += 1
             return token
+
+        # multidigit integer as string
+        if current_char.isdigit():
+            number_builder = ''
+            while current_char.isdigit():
+                number_builder += current_char
+                print(number_builder)
+                self.pos += 1
+                current_char = text[self.pos]
+            return Token(INTEGER, int(number_builder))
 
         self.error()
 
