@@ -1,6 +1,6 @@
+from old.settings import *
+from old.token import Token
 
-from token import Token
-from settings import *
 
 class Interpreter(object):
     def __init__(self, text):

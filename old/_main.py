@@ -1,9 +1,9 @@
-
 import sys
 
-from settings import *
-from token import Token
 from interpreter import Interpreter
+
+from old.settings import *
+from old.token import Token
 
 print ('hello from python')
 print(sys.version)
