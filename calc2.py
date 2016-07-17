@@ -3,7 +3,7 @@
 # EOF (end-of-file) token is used to indicate that
 # there is no more input left for lexical analysis
 
-INTEGER, PLUS, MINUS, EOF = 'INTEGER', 'PLUS', 'MINUS', 'EOF'
+INTEGER, PLUS, MINUS, MUL, DIV, EOF = 'INTEGER', 'PLUS', 'MINUS', 'MUL', 'DIV', 'EOF'
 
 class Token(object):
     def __init__(self, type, value):
@@ -82,6 +82,14 @@ class Interpreter(object):
                 self.advance()
                 return Token(MINUS, '-')
 
+            if self.current_char == '*':
+                self.advance()
+                return Token(MUL, '-')
+
+            if self.current_char == '/':
+                self.advance()
+                return Token(DIV, '/')
+
             self.error()
         return Token(EOF, None)
 
@@ -115,6 +123,10 @@ class Interpreter(object):
             self.eat(MINUS)
         if op.type == PLUS:
             self.eat(PLUS)
+        if op.type == MUL:
+            self.eat(MUL)
+        if op.type == DIV:
+            self.eat(DIV)
 
         # we expect the current token to be a single-digit integer
         right = self.current_token
@@ -129,8 +141,12 @@ class Interpreter(object):
 
         if op.type == PLUS:
             result = left.value + right.value
-        else:
+        if op.type == MINUS:
             result = left.value - right.value
+        if op.type == MUL:
+            result = left.value * right.value
+        if op.type == DIV:
+            result = left.value // right.value
         return result
 
 
@@ -139,7 +155,7 @@ def main():
         try:
             # To run under Python3 replace 'raw_input' call
             # with 'input'
-            text = input('calc> ')
+            text = input('calc2 > ')
         except EOFError:
             break
         if not text:
